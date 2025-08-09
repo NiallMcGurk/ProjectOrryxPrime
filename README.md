@@ -49,7 +49,7 @@ Requirements:
 
 To run locally:  
 
-git clone https://github.com/yourusername/warhammer-army-tracker.git
+git clone https://github.com/NiallMcGurk/ProjectOrryxPrime
 cd warhammer-army-tracker
 
 # Setup DB
