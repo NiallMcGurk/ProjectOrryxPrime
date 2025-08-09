@@ -1,0 +1,19 @@
+@startuml
+actor Admin
+participant "Admin UI" as AdminUI
+participant "Backend API" as API
+database "User Database" as UserDB
+
+Admin -> AdminUI: Open User Management
+AdminUI -> API: Fetch user list
+API -> UserDB: Get all users
+UserDB --> API: Return users
+API --> AdminUI: Display user list
+
+Admin -> AdminUI: Edit user roles or permissions
+AdminUI -> API: Submit changes
+API -> UserDB: Update user data
+UserDB --> API: Confirm update
+API --> AdminUI: Confirm success
+AdminUI --> Admin: Show confirmation
+@enduml

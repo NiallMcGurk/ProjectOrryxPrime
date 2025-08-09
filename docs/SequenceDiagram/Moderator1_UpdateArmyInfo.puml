@@ -1,0 +1,19 @@
+@startuml
+actor Moderator
+participant "Moderator UI" as ModUI
+participant "Backend API" as API
+database "Rules Database" as DB
+
+Moderator -> ModUI: Open Rules Management
+ModUI -> API: Request current points & rules
+API -> DB: Fetch current rules
+DB --> API: Return rules data
+API --> ModUI: Send data
+
+Moderator -> ModUI: Edit information.
+ModUI -> API: Submit updates
+API -> DB: Update points & rules
+DB --> API: Confirm update
+API --> ModUI: Confirm success
+ModUI --> Moderator: Show confirmation
+@enduml

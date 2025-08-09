@@ -1,0 +1,11 @@
+@startuml
+actor Guest
+participant "App UI" as UI
+participant "Backend API" as API
+
+Guest -> UI: Open Quick Army Builder
+User -> UI: Add squads and units
+UI -> API: Save temporary army (no login)
+API --> UI: Confirm save with temp ID
+UI --> Guest: Show quick army summary
+@enduml

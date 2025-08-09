@@ -1,0 +1,13 @@
+@startuml
+actor User
+participant "App UI" as UI
+participant "Backend API" as API
+database "Rules Database" as DB
+
+User -> UI: Click "Show Rules" button
+UI -> API: Request army rules
+API -> DB: Query current rules
+DB --> API: Return rules data
+API --> UI: Send rules data
+UI --> User: Display rules
+@enduml

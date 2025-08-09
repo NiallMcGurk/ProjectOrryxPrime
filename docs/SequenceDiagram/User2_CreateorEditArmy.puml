@@ -1,0 +1,19 @@
+@startuml
+actor User
+participant "App UI" as UI
+participant "Backend API" as API
+database "Army Database" as ArmyDB
+
+User -> UI: Open Army Editor
+UI -> API: Request current army data (if editing)
+API -> ArmyDB: Fetch army & squads data
+ArmyDB --> API: Return army & squads
+API --> UI: Send data to display
+
+User -> UI: Add/Edit squads and units
+UI -> API: Save updated army data
+API -> ArmyDB: Update army & squads
+ArmyDB --> API: Confirm update
+API --> UI: Confirm success
+UI --> User: Show confirmation
+@enduml
