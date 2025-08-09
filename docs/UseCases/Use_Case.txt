@@ -1,0 +1,162 @@
+RU1 – Create an Army
+Actor: Regular User
+Preconditions: User is logged in.
+Main Flow:
+
+Select “Create New Army.”
+
+Enter army name, faction, and points limit.
+
+Save army.
+Alternative Flows:
+
+3a. If no points limit is entered, default applies.
+Postconditions: Army saved to user’s account.
+
+RU2 – Add Squads to an Army
+Actor: Regular User
+Preconditions: Army exists in user account.
+Main Flow:
+
+Open army profile.
+
+Select “Add Squad.”
+
+Choose squad type from faction list.
+
+Configure squad (units, weapons, upgrades).
+
+System calculates squad’s points and updates total.
+
+Save squad.
+Alternative Flows:
+
+4a. If upgrades exceed points limit, warning is shown.
+Postconditions: Squad is stored with updated points.
+
+RU3 – View Army Rules
+Actor: Regular User
+Preconditions: Army exists with at least one squad.
+Main Flow:
+
+Press “View Rules” button.
+
+System retrieves latest rules for all squads and faction.
+
+Display combined list.
+Alternative Flows:
+
+2a. If offline, display last cached rules.
+Postconditions: Rules shown on screen.
+
+RU4 – Export and Share Army
+Actor: Regular User
+Preconditions: Army exists.
+Main Flow:
+
+Open army profile.
+
+Select “Export as PDF.”
+
+System generates PDF with army, points, and rules.
+
+Save or share PDF.
+Alternative Flows:
+
+3a. If export fails, retry option appears.
+Postconditions: PDF saved or shared.
+
+Moderator Use Cases
+M1 – Update Army Points
+Actor: Moderator
+Preconditions: Moderator logged in.
+Main Flow:
+
+Open “Points Management” panel.
+
+Search or browse for squad/unit.
+
+Edit points value.
+
+Save changes.
+Alternative Flows:
+
+3a. If points are invalid, system prompts correction.
+Postconditions: Updated points reflected in all future calculations.
+
+M2 – Update Army Rules
+Actor: Moderator
+Preconditions: Moderator logged in.
+Main Flow:
+
+Open “Rules Management” panel.
+
+Search or browse for faction/squad.
+
+Edit or replace rules text.
+
+Save changes.
+Alternative Flows:
+
+3a. If rule conflicts with system format, validation fails.
+Postconditions: Updated rules are available to all users.
+
+Guest Visitor Use Cases
+G1 – Quickly Create Army
+Actor: Guest Visitor
+Preconditions: App is open; no account required.
+Main Flow:
+
+Select “Quick Army Builder.”
+
+Choose faction.
+
+Add squads using simplified form.
+
+System shows total points.
+Alternative Flows:
+
+3a. If points exceed limit, show warning.
+Postconditions: Army list is viewable but not saved permanently.
+
+Admin User Use Cases
+A1 – Manage Users
+Actor: Admin User
+Preconditions: Admin logged in.
+Main Flow:
+
+Open “User Management” panel.
+
+Search for a user.
+
+View, edit, or delete user account.
+Alternative Flows:
+
+3a. If deletion is attempted, confirmation required.
+Postconditions: User database updated.
+
+A2 – Manage Moderators
+Actor: Admin User
+Preconditions: Admin logged in.
+Main Flow:
+
+Open “Moderator Management” panel.
+
+Promote/demote moderator privileges.
+Alternative Flows:
+
+2a. If promotion fails due to role conflict, error shown.
+Postconditions: Moderator access rights updated.
+
+A3 – System Settings Management
+Actor: Admin User
+Preconditions: Admin logged in.
+Main Flow:
+
+Open “System Settings” panel.
+
+Change app-wide configurations (data sources, update frequency).
+
+Save changes.
+Postconditions: Settings applied to system operations.
+
