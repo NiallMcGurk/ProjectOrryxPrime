@@ -24,7 +24,7 @@ It’s also part of my personal goal to move to Berlin and land a software engin
 
 ## Tech Stack
 
-**Frontend**: Blazor WebAssembly  
+**Frontend**: Blazor WebAssembly 
 **Backend**: ASP.NET Core API, Entity Framework Core, SQL Server  
 **Other**: UML diagrams, Use Cases, Sequence Diagrams, Graphviz
 
@@ -38,7 +38,6 @@ Everything is in /docs:
 - Sequence Diagrams for major flows  
 - ERD for the database  
 - System Architecture Diagram
-
 ---
 
 ## Quick Start
@@ -46,24 +45,6 @@ Everything is in /docs:
 Requirements:  
 - .NET 8 SDK  
 - SQL Server
-
-To run locally:  
-
-git clone https://github.com/NiallMcGurk/ProjectOrryxPrime
-cd warhammer-army-tracker
-
-# Setup DB
-cd backend
-dotnet ef database update
-
-# Start backend
-dotnet run
-
-# Start frontend
-cd ../frontend
-dotnet watch run
-
-Then open: http://localhost:5000 in your browser of choice.
 
 ## Why I’m Building This
 
