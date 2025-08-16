@@ -9,9 +9,10 @@
 .vsconfig
 
 # Ignore build output
-/bin/
-/obj/
+bin/
+obj/
 
 # Ignore OS-specific files
 Thumbs.db
 Desktop.ini
+/ProjectOrryxPrime/appsettings.json

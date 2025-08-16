@@ -5,7 +5,7 @@
 
 ## Main Flow:
 1. Select “Create New Army.”
-2. Enter army name, faction, and points limit.
+2. Select army name, faction, and points limit.
 3. Save army.
 
 ## Alternative Flows:
