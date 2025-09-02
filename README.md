@@ -19,7 +19,6 @@ It’s also part of my personal goal to move to Berlin and land a software engin
 - Moderator Tools – Update official points and rules when Games Workshop releases changes.  
 - Admin Tools – Manage users, moderators, and system settings.  
 - Export to PDF – Share with friends or tournament organisers.
-
 ---
 
 ## Tech Stack
@@ -27,8 +26,6 @@ It’s also part of my personal goal to move to Berlin and land a software engin
 **Frontend**: React
 
 **Backend**: ASP.NET Core API, Entity Framework Core, SQL Server  
-**Documentation**: UML diagrams, Use Cases, Sequence Diagrams
-
 ---
 
 ## Documentation
@@ -40,12 +37,6 @@ Everything is in /docs:
 - ERD for the database  
 - System Architecture Diagram
 ---
-
-## Quick Start
-
-Requirements:  
-- .NET 8 SDK  
-- SQL Server
 
 ## Why I’m Building This
 
@@ -63,4 +54,5 @@ I’m Niall McGurk, a software engineer from Dublin, moving to Berlin in 2026.
 - C#, .NET, SQL, JavaScript  
 - Experience with web apps, APIs, and building tools for real-world use cases  
 - LinkedIn: https://www.linkedin.com/in/niall-mcgurk/
-- GitHub: https://github.com/NiallMcGurk/ProjectOrryxPrime
+
+## Thanks for Reading!
