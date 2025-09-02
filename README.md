@@ -25,7 +25,8 @@ It’s also part of my personal goal to move to Berlin and land a software engin
 
 **Frontend**: React
 
-**Backend**: ASP.NET Core API, Entity Framework Core, SQL Server  
+**Backend**: ASP.NET Core API, Entity Framework Core, SQL Server 
+
 ---
 
 ## Documentation
