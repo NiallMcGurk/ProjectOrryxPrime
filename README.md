@@ -24,9 +24,9 @@ It’s also part of my personal goal to move to Berlin and land a software engin
 
 ## Tech Stack
 
-**Frontend**: Blazor WebAssembly 
+**Frontend**: React
 **Backend**: ASP.NET Core API, Entity Framework Core, SQL Server  
-**Other**: UML diagrams, Use Cases, Sequence Diagrams, Graphviz
+**Documentation**: UML diagrams, Use Cases, Sequence Diagrams
 
 ---
 
