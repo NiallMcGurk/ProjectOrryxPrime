@@ -7,7 +7,7 @@ class Program
     {
         var builder = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("C:\\Users\\niall\\source\\repos\\ProjectOrryxPrime\\ProjectOrryxPrime\\appsettings.json");
+            .AddJsonFile("C:\\Users\\niall\\source\\repos\\NiallMcGurk\\ProjectOrryxPrime\\ProjectOrryxPrime\\appsettings.json");
 
         IConfiguration config = builder.Build();
 

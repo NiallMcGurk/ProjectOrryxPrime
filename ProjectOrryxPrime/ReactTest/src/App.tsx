@@ -1,9 +1,9 @@
-import ListGroup from "./components/ListGroup";
+import LoginForm from "./components/LoginForm";
 
 function App() {
   return (
     <div>
-      <ListGroup />
+      <LoginForm />
     </div>
   );
 }
