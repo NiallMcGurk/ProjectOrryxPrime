@@ -25,6 +25,7 @@ It’s also part of my personal goal to move to Berlin and land a software engin
 ## Tech Stack
 
 **Frontend**: React
+
 **Backend**: ASP.NET Core API, Entity Framework Core, SQL Server  
 **Documentation**: UML diagrams, Use Cases, Sequence Diagrams
 
