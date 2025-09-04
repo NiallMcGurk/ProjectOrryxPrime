@@ -1,4 +1,4 @@
-﻿namespace ProjectOrryxPrime.FunctionalAreas.Login
+﻿namespace ProjectOrryxPrime.FunctionalAreas.Models
 {
     public class LoginDetailsModel
     {
