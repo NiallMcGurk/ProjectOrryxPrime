@@ -25,7 +25,7 @@ function CreateAccount() {
 
     console.log(accountDetails);
 
-    const response = await fetch("http://http://localhost:5173/createAccount", {
+    const response = await fetch("http://localhost:51003/controller/account", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
