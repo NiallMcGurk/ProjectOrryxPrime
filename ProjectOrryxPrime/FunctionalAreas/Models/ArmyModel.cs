@@ -1,6 +1,5 @@
 public class ArmyModel
 {
-    public int Id { get; set; }
     public string ArmyUsername { get; set; } = string.Empty;
     public int PointSize { get; set; }
     public ArmyType Type { get; set; }
