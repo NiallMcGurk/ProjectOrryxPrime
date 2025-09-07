@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ProjectOrryxPrime.FunctionalAreas.Models;
 using Microsoft.Data.SqlClient;
-using Microsoft.AspNetCore.Identity;
-using ProjectOrryxPrime.FunctionalAreas;
-
+using ProjectOrryxPrime.BusinessLogic;
+using ProjectOrryxPrime.FunctionalAreas.Models;
 
 namespace ProjectOrryxPrime.Controllers
 {
@@ -21,24 +19,44 @@ namespace ProjectOrryxPrime.Controllers
         [HttpPost("account")]
         public IActionResult CreateAccount([FromBody] AccountModel model)
         {
-            PasswordHashManager hashManager = new PasswordHashManager();
-            model.Password = hashManager.HashPassword(model.Password);
+            CreateAccountBOL accountBOL = new CreateAccountBOL(this._config);
+            int rowsAffected = accountBOL.CreateAccount(model);
 
-            string passwordHash = hashManager.HashPassword(model.Password);
+            if (rowsAffected > 0)
+                return Ok(new { Message = "Account created successfully." });
+            else
+                return StatusCode(500, new { Message = "Failed to create account." });
+        }
 
+        [HttpGet("account/{username}")]
+        public IActionResult GetAccount(string email)
+        {
             string connectionString = _config.GetConnectionString("DefaultConnection");
-
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "INSERT INTO Accounts (Username, Email, PasswordHash) VALUES (@Username, @Email, @PasswordHash)";
+                string query = "SELECT Username, Email FROM Accounts WHERE Email = @Email";
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@Username", model.Username);
-                    cmd.Parameters.AddWithValue("@Email", model.Email);
-                    cmd.Parameters.AddWithValue("@PasswordHash", passwordHash);
-                    int rowsAffected = cmd.ExecuteNonQuery();
-                    return Ok(new { rowsAffected });
+                    cmd.Parameters.AddWithValue("@Email", email); 
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            AccountModel model = new AccountModel
+                            {
+                                Username = reader.GetString(reader.GetOrdinal("Username")),
+                                Email = reader.GetString(reader.GetOrdinal("Email")),
+                            };
+
+                            return Ok(model);
+                        }
+                        else
+                        {
+                            return NotFound(new { message = "Account not found." });
+                        }
+                    }
                 }
             }
         }
