@@ -23,20 +23,23 @@ function CreateAccount() {
       return;
     }
 
-    console.log(accountDetails);
-
-    const response = await fetch("http://http://localhost:5173/createAccount", {
+    const response = await fetch("http://localhost:51003/controller/account", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        accountDetails,
-      }),
+      body: JSON.stringify(accountDetails),
     });
 
-    const data = await response.json();
-    console.log("Sent to C#" + data);
+    if (!response.ok) {
+      throw new Error(`Server error: ${response.status}`);
+    }
+    const contentType = response.headers.get("content-type");
+
+    let data = null;
+    if (contentType && contentType.includes("application/json")) {
+      data = await response.json();
+    }
   };
   return (
     <section className="vh-100">
