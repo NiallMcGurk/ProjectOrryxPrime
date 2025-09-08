@@ -16,7 +16,7 @@ function LoginForm() {
   const loginHandler = async (event: LoginHandlerEvent): Promise<void> => {
     event.preventDefault();
 
-    const loginResponseData = await fetch("http://localhost:5173", {
+    const loginResponseData = await fetch("http://localhost:51003/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
