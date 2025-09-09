@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface AccountDetails {
   username: string;
@@ -15,6 +16,8 @@ function CreateAccount() {
     repeatPassword: "",
   });
 
+  const navigate = useNavigate();
+
   const handlerSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -23,22 +26,29 @@ function CreateAccount() {
       return;
     }
 
-    const response = await fetch("http://localhost:51003/controller/account", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(accountDetails),
-    });
+    try {
+      const response = await fetch(
+        "http://localhost:51003/accountController/account",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(accountDetails),
+        }
+      );
 
-    if (!response.ok) {
-      throw new Error(`Server error: ${response.status}`);
-    }
-    const contentType = response.headers.get("content-type");
+      const data = await response.json();
 
-    let data = null;
-    if (contentType && contentType.includes("application/json")) {
-      data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || "Error");
+      }
+
+      navigate("/login");
+    } catch (error) {
+      alert(
+        "An error occurred during account creation. Please try again later."
+      );
     }
   };
   return (

@@ -20,18 +20,21 @@ function LoginForm() {
     event.preventDefault();
 
     try {
-      const loginResponseData = await fetch("http://localhost:51003/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(loginDetails),
-      });
+      const loginResponseData = await fetch(
+        "http://localhost:51003/loginController/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(loginDetails),
+        }
+      );
 
       const result = await loginResponseData.json();
 
       if (loginResponseData.ok) {
-        navigation("/account");
+        navigation("/account", { state: { user: result } });
       } else {
         alert(result.message || "Login failed");
       }

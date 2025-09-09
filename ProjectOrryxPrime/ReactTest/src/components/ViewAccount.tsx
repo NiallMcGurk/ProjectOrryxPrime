@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 interface AccountDetails {
   email: string;
@@ -6,24 +7,13 @@ interface AccountDetails {
 }
 
 function ViewAccount() {
-  const [accountDetails, setAccountDetails] = useState<AccountDetails>({
-    email: "",
-    username: "",
-  });
+  const location = useLocation();
+  const user = location.state?.user;
 
-  useEffect(() => {
-    fetch("http://localhost:51003/controller/account")
-      .then((response) => response.json())
-      .then((data) => {
-        setAccountDetails({
-          email: data.email,
-          username: data.username,
-        });
-      })
-      .catch((error) => {
-        console.error("Error fetching account details:", error);
-      });
-  }, []);
+  const [accountDetails, setAccountDetails] = useState<AccountDetails>({
+    email: user?.email || "",
+    username: user?.username || "",
+  });
 
   return (
     <div className="container">
@@ -34,23 +24,27 @@ function ViewAccount() {
               <div className="row gutters">
                 <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                   <div className="form-group">
-                    <label htmlFor="userName">{accountDetails.username}</label>
+                    <label htmlFor="userName">Username</label>
                     <input
                       type="text"
                       className="form-control"
                       id="userName"
                       placeholder="Enter full name"
+                      value={accountDetails.username}
+                      readOnly
                     />
                   </div>
                 </div>
                 <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                   <div className="form-group">
-                    <label htmlFor="eMail">{accountDetails.email}</label>
+                    <label htmlFor="eMail">Email</label>
                     <input
                       type="email"
                       className="form-control"
                       id="eMail"
                       placeholder="Enter email ID"
+                      value={accountDetails.email}
+                      readOnly
                     />
                   </div>
                 </div>

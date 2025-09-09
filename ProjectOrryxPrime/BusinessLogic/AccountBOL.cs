@@ -2,6 +2,7 @@
 using ProjectOrryxPrime.FunctionalAreas;
 using ProjectOrryxPrime.FunctionalAreas.Models;
 using System.Data;
+using System.Reflection;
 
 namespace ProjectOrryxPrime.BusinessLogic
 {
@@ -14,7 +15,7 @@ namespace ProjectOrryxPrime.BusinessLogic
             this._config = config;
         }
 
-        public int CreateAccount(AccountModel model)
+        public int CreateAccount(CreateAccountModel model)
         {
             PasswordHashManager hashManager = new PasswordHashManager();
             string passwordHash = hashManager.HashPassword(model.Password);
@@ -35,7 +36,7 @@ namespace ProjectOrryxPrime.BusinessLogic
             }
         }
 
-        public AccountModel? GetAccount(string email)
+        public ViewAccountModel? GetAccount(LoginDetailsModel loginDetailsModel)
         {
             try
             {
@@ -43,23 +44,27 @@ namespace ProjectOrryxPrime.BusinessLogic
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    string query = "SELECT Username, PasswordHash FROM Accounts WHERE Email = @Email";
+                    string query = "SELECT Username, PasswordHash, Email FROM Accounts WHERE Email = @Email";
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
-                        cmd.Parameters.Add("@Email", SqlDbType.NVarChar, 256).Value = email;
+                        // Defines the email parameter
+                        cmd.Parameters.Add("@Email", SqlDbType.NVarChar, 256).Value = loginDetailsModel.Email;
 
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
                             if (reader.Read())
                             {
-                                AccountModel model = new AccountModel
-                                {
-                                    Username = reader.GetString(reader.GetOrdinal("Username")),
-                                    Password = reader.GetString(reader.GetOrdinal("PasswordHash")),
-                                    Email = email,
-                                };
+                                string passwordHash = reader.GetString(reader.GetOrdinal("PasswordHash"));
 
-                                return model;
+                                PasswordHashManager hashManager = new PasswordHashManager();
+                                if (hashManager.VerifyPassword(passwordHash, loginDetailsModel.Password))
+                                {
+                                    return new ViewAccountModel
+                                    {
+                                        Username = reader.GetString(reader.GetOrdinal("Username")),
+                                        Email = reader.GetString(reader.GetOrdinal("Email")),
+                                    };
+                                }
                             }
                         }
                     }

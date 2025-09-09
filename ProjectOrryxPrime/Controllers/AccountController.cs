@@ -7,7 +7,7 @@ using ProjectOrryxPrime.FunctionalAreas.Models;
 namespace ProjectOrryxPrime.Controllers
 {
     [ApiController]
-    [Route("controller")]
+    [Route("accountController")]
     public class AccountController : ControllerBase
     {
         private readonly IConfiguration _config;
@@ -18,7 +18,7 @@ namespace ProjectOrryxPrime.Controllers
         }
 
         [HttpPost("account")]
-        public IActionResult CreateAccount([FromBody] AccountModel model)
+        public IActionResult CreateAccount([FromBody] CreateAccountModel model)
         {
             AccountBOL accountBOL = new AccountBOL(this._config);
             int rowsAffected = accountBOL.CreateAccount(model);
@@ -29,20 +29,17 @@ namespace ProjectOrryxPrime.Controllers
                 return StatusCode(500, new { Message = "Failed to create account." });
         }
 
-        [HttpGet("account")]
-        public IActionResult GetAccount(string? email, string? password)
+        internal ViewAccountModel? GetAccount(LoginDetailsModel loginDetailsModel)
         {
-            if (password != null || email != null)
+            if (loginDetailsModel.Password != null && loginDetailsModel.Email != null)
             {
-                AccountModel? accountModel = new AccountBOL(this._config).GetAccount(email);
-                if (accountModel != null)
+                ViewAccountModel? viewAccountModel = new AccountBOL(this._config).GetAccount(loginDetailsModel);
+                if (viewAccountModel != null)
                 {
-                    PasswordHashManager hashManager = new PasswordHashManager();
-                    hashManager.VerifyPassword(accountModel.Password, password);
-                    return Ok(accountModel);
+                    return viewAccountModel;
                 }
             }
-            return NotFound(new { message = "Account not found." });
+            return null;
         }
     }
 }
