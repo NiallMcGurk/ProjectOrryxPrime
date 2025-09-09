@@ -15,7 +15,12 @@ namespace ProjectOrryxPrime.FunctionalAreas
         public bool VerifyPassword(string hashedPassword, string inputPassword)
         {
             var result = _hasher.VerifyHashedPassword(_dummyUser, hashedPassword, inputPassword);
-            return result == PasswordVerificationResult.Success;
+
+            if(result == PasswordVerificationResult.Success)
+            {
+                return true;
+            }
+            return false;
         }
 
     }

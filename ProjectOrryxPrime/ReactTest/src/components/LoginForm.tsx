@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface LoginFormDetails {
   email: string;
@@ -11,20 +12,36 @@ function LoginForm() {
     password: "",
   });
 
-  interface LoginHandlerEvent extends React.FormEvent<HTMLFormElement> {}
+  const navigation = useNavigate();
 
-  const loginHandler = async (event: LoginHandlerEvent): Promise<void> => {
+  const loginHandler = async (
+    event: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     event.preventDefault();
 
-    const loginResponseData = await fetch("http://localhost:5173", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(loginDetails),
-    });
+    try {
+      const loginResponseData = await fetch(
+        "http://localhost:51003/loginController/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(loginDetails),
+        }
+      );
 
-    const result = await loginResponseData.json();
+      const result = await loginResponseData.json();
+
+      if (loginResponseData.ok) {
+        navigation("/account", { state: { user: result } });
+      } else {
+        alert(result.message || "Login failed");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      alert("An error occurred during login. Please try again later.");
+    }
   };
 
   return (
