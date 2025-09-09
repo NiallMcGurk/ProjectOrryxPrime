@@ -1,20 +1,30 @@
+import { useEffect, useState } from "react";
+
 interface AccountDetails {
   email: string;
   username: string;
 }
 
 function ViewAccount() {
-  const accountDetails: AccountDetails = {
+  const [accountDetails, setAccountDetails] = useState<AccountDetails>({
     email: "",
     username: "",
-  };
+  });
 
-  fetch("http://localhost:51003/controller/account")
-    .then((response) => response.json())
-    .then((data) => {
-      accountDetails.email = data.email;
-      accountDetails.username = data.username;
-    });
+  useEffect(() => {
+    fetch("http://localhost:51003/controller/account")
+      .then((response) => response.json())
+      .then((data) => {
+        setAccountDetails({
+          email: data.email,
+          username: data.username,
+        });
+      })
+      .catch((error) => {
+        console.error("Error fetching account details:", error);
+      });
+  }, []);
+
   return (
     <div className="container">
       <div className="row gutters">
