@@ -1,18 +1,17 @@
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
 interface AccountDetails {
-  email: string;
-  username: string;
+  Username: string;
+  Email: string;
 }
 
 function ViewAccount() {
-  const location = useLocation();
-  const user = location.state?.user;
+  const { authUser } = useAuth();
 
   const [accountDetails, setAccountDetails] = useState<AccountDetails>({
-    email: user?.email || "",
-    username: user?.username || "",
+    Email: authUser?.Email || "",
+    Username: authUser?.Username || "",
   });
 
   return (
@@ -30,7 +29,7 @@ function ViewAccount() {
                       className="form-control"
                       id="userName"
                       placeholder="Enter full name"
-                      value={accountDetails.username}
+                      value={accountDetails.Username}
                       readOnly
                     />
                   </div>
@@ -43,7 +42,7 @@ function ViewAccount() {
                       className="form-control"
                       id="eMail"
                       placeholder="Enter email ID"
-                      value={accountDetails.email}
+                      value={accountDetails.Email}
                       readOnly
                     />
                   </div>
