@@ -1,8 +1,10 @@
 import React, { useContext, useState, useEffect, ReactNode } from "react";
 
 interface AuthContextType {
-  authUser: { Username: string; Email: string } | null;
-  setAuthUser: (user: { Username: string; Email: string } | null) => void;
+  authUser: { Id: number; Username: string; Email: string } | null;
+  setAuthUser: (
+    user: { Id: number; Username: string; Email: string } | null
+  ) => void;
   isLoggedIn: boolean;
   setIsLoggedIn: (loggedIn: boolean) => void;
 }
@@ -23,6 +25,7 @@ interface AuthProviderProps {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [authUser, setAuthUser] = useState<{
+    Id: number;
     Username: string;
     Email: string;
   } | null>(null);

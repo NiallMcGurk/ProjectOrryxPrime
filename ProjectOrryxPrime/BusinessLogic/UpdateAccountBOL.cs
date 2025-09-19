@@ -6,16 +6,16 @@ using System.Reflection;
 
 namespace ProjectOrryxPrime.BusinessLogic
 {
-    public class AccountBOL
+    public class UpdateAccountBOL
     {
         private readonly IConfiguration _config;
 
-        public AccountBOL(IConfiguration config)
+        public UpdateAccountBOL(IConfiguration config)
         {
             this._config = config;
         }
 
-        public int CreateAccount(CreateAccountModel model)
+        public int UpdateAccount(UpdateAccountModel model)
         {
             PasswordHashManager hashManager = new PasswordHashManager();
             string passwordHash = hashManager.HashPassword(model.Password);
@@ -24,9 +24,10 @@ namespace ProjectOrryxPrime.BusinessLogic
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "INSERT INTO Accounts (Username, Email, PasswordHash) VALUES (@Username, @Email, @PasswordHash)";
+                string query = "UPDATE Accounts SET Username = @Username, Email = @Email, PasswordHash = @PasswordHash WHERE Id = @Id";
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
+                    cmd.Parameters.AddWithValue("@Id", model.Id);
                     cmd.Parameters.AddWithValue("@Username", model.Username);
                     cmd.Parameters.AddWithValue("@Email", model.Email);
                     cmd.Parameters.AddWithValue("@PasswordHash", passwordHash);
@@ -44,7 +45,7 @@ namespace ProjectOrryxPrime.BusinessLogic
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    string query = "SELECT Username, PasswordHash, Email, Id FROM Accounts WHERE Email = @Email";
+                    string query = "SELECT Id, Username, PasswordHash, Email FROM Accounts WHERE Email = @Email";
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
                         // Defines the email parameter
@@ -61,9 +62,9 @@ namespace ProjectOrryxPrime.BusinessLogic
                                 {
                                     return new ViewAccountModel
                                     {
+                                        Id = reader.GetInt32(reader.GetOrdinal("Id")),
                                         Username = reader.GetString(reader.GetOrdinal("Username")),
                                         Email = reader.GetString(reader.GetOrdinal("Email")),
-                                        Id = reader.GetInt32(reader.GetOrdinal("Id"))
                                     };
                                 }
                             }

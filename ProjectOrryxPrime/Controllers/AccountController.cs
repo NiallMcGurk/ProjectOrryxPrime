@@ -41,5 +41,12 @@ namespace ProjectOrryxPrime.Controllers
             }
             return null;
         }
+
+        public IActionResult UpdateAccount([FromBody] UpdateAccountModel model)
+        {
+            UpdateAccountBOL updateAccountBOL = new UpdateAccountBOL(this._config);
+            int rowsAffected = updateAccountBOL.UpdateAccount(model);
+            return Ok(new { Message = "Account updated successfully." });
+        }
     }
 }
