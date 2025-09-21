@@ -13,6 +13,9 @@ function ViewAccount() {
   const [accountDetails, setAccountDetails] = useState({
     Email: "",
     Username: "",
+    NewPassword: "",
+    RepeatNewPassword: "",
+    CurrentPassword: "",
   });
 
   const navigation = useNavigate();
@@ -22,6 +25,9 @@ function ViewAccount() {
       setAccountDetails({
         Email: authUser.Email,
         Username: authUser.Username,
+        NewPassword: "",
+        RepeatNewPassword: "",
+        CurrentPassword: "",
       });
     }
   }, [authUser]);
@@ -76,7 +82,7 @@ function ViewAccount() {
                 <div className="row gutters">
                   <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div className="form-group">
-                      <label htmlFor="userName">Username</label>
+                      <label htmlFor="Username">Username</label>
                       <input
                         type="text"
                         className="form-control"
@@ -89,13 +95,58 @@ function ViewAccount() {
                   </div>
                   <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div className="form-group">
-                      <label htmlFor="eMail">Email</label>
+                      <label htmlFor="Email">Email</label>
                       <input
                         type="email"
                         className="form-control"
                         name="Email"
                         placeholder="Enter email ID"
                         value={accountDetails.Email}
+                        onChange={getNewAccountDetails}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div className="form-group">
+                      <label htmlFor="exampleInputPassword1">
+                        New Password
+                      </label>
+                      <input
+                        type="password"
+                        className="form-control"
+                        name="NewPassword"
+                        placeholder="Enter a New Password"
+                        value={accountDetails.NewPassword}
+                        onChange={getNewAccountDetails}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div className="form-group">
+                      <label htmlFor="exampleInputPassword2">
+                        Repeat New Password
+                      </label>
+                      <input
+                        type="password"
+                        className="form-control"
+                        name="RepeatNewPassword"
+                        placeholder="Repeat a New Password"
+                        value={accountDetails.RepeatNewPassword}
+                        onChange={getNewAccountDetails}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div className="form-group">
+                      <label htmlFor="exampleInputPassword2">
+                        Current Password
+                      </label>
+                      <input
+                        type="password"
+                        className="form-control"
+                        name="CurrentPassword"
+                        placeholder="Current Password"
+                        value={accountDetails.CurrentPassword}
                         onChange={getNewAccountDetails}
                       />
                     </div>

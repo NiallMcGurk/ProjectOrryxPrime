@@ -42,10 +42,16 @@ namespace ProjectOrryxPrime.Controllers
             return null;
         }
 
+        [HttpPut("account")]
         public IActionResult UpdateAccount([FromBody] UpdateAccountModel model)
         {
             UpdateAccountBOL updateAccountBOL = new UpdateAccountBOL(this._config);
             int rowsAffected = updateAccountBOL.UpdateAccount(model);
+
+            if(rowsAffected == -2)
+            {
+                return BadRequest(new { Error = "Password is invalid or does not meet requirements." });
+            }
             return Ok(new { Message = "Account updated successfully." });
         }
     }

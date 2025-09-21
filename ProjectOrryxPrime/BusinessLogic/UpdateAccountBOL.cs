@@ -18,21 +18,54 @@ namespace ProjectOrryxPrime.BusinessLogic
         public int UpdateAccount(UpdateAccountModel model)
         {
             PasswordHashManager hashManager = new PasswordHashManager();
-            string passwordHash = hashManager.HashPassword(model.Password);
 
             string connectionString = _config.GetConnectionString("DefaultConnection");
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "UPDATE Accounts SET Username = @Username, Email = @Email, PasswordHash = @PasswordHash WHERE Id = @Id";
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+
+                string selectQuery = "SELECT PasswordHash FROM Accounts WHERE Id = @Id";
+                string? storedHash = null;
+
+                using (SqlCommand selectCmd = new SqlCommand(selectQuery, conn))
                 {
-                    cmd.Parameters.AddWithValue("@Id", model.Id);
-                    cmd.Parameters.AddWithValue("@Username", model.Username);
-                    cmd.Parameters.AddWithValue("@Email", model.Email);
-                    cmd.Parameters.AddWithValue("@PasswordHash", passwordHash);
-                    int rowsAffected = cmd.ExecuteNonQuery();
-                    return rowsAffected;
+                    selectCmd.Parameters.AddWithValue("@Id", model.Id);
+                    var result = selectCmd.ExecuteScalar();
+                    if (result != null)
+                    {
+                        storedHash = result.ToString();
+                    }
+                    else
+                    {
+                        return -1; 
+                    }
+                }
+
+                if (!hashManager.VerifyPassword(storedHash!, model.Password))
+                {
+                    return -2;
+                }
+
+                string hashPassword;
+                if (model.Password != model.NewPassword)
+                {
+                    hashPassword = hashManager.HashPassword(model.NewPassword);
+                }
+                else
+                {
+                    hashPassword = storedHash!;
+                }
+
+                string updateQuery = "UPDATE Accounts SET Username = @Username, Email = @Email, PasswordHash = @PasswordHash WHERE Id = @Id";
+                using (SqlCommand updateCmd = new SqlCommand(updateQuery, conn))
+                {
+                    updateCmd.Parameters.AddWithValue("@Id", model.Id);
+                    updateCmd.Parameters.AddWithValue("@Username", model.Username);
+                    updateCmd.Parameters.AddWithValue("@Email", model.Email);
+                    updateCmd.Parameters.AddWithValue("@PasswordHash", hashPassword);
+
+                    int rowsAffected = updateCmd.ExecuteNonQuery();
+                    return rowsAffected; 
                 }
             }
         }
@@ -48,7 +81,6 @@ namespace ProjectOrryxPrime.BusinessLogic
                     string query = "SELECT Id, Username, PasswordHash, Email FROM Accounts WHERE Email = @Email";
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
-                        // Defines the email parameter
                         cmd.Parameters.Add("@Email", SqlDbType.NVarChar, 256).Value = loginDetailsModel.Email;
 
                         using (SqlDataReader reader = cmd.ExecuteReader())
