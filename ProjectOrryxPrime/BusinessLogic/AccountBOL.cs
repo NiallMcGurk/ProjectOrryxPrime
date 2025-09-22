@@ -77,5 +77,21 @@ namespace ProjectOrryxPrime.BusinessLogic
                 throw new Exception("An error occurred while fetching account.", ex);
             }
         }
+
+        public int DeleteAccount(int accountId)
+        {
+            string connectionString = _config.GetConnectionString("DefaultConnection");
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "DELETE FROM Accounts WHERE Id = @Id";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Id", accountId);
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    return rowsAffected;
+                }
+            }
+        }
     }
 }

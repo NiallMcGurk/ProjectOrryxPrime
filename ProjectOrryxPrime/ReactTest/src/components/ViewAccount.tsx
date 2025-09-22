@@ -3,7 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 function ViewAccount() {
-  const { authUser, setAuthUser } = useAuth();
+  const { authUser, setAuthUser, setIsLoggedIn } = useAuth();
 
   const [accountDetails, setAccountDetails] = useState({
     Email: "",
@@ -66,6 +66,32 @@ function ViewAccount() {
     } catch (error) {
       console.error("Error during login:", error);
       alert("An error occurred during login. Please try again later.");
+    }
+  };
+
+  const deleteAccountHandler = async () => {
+    try {
+      const deleteResponseData = await fetch(
+        `http://localhost:51003/accountController/deleteAccount`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(accountDetails.Id),
+        }
+      );
+      if (deleteResponseData.ok) {
+        alert("Account deleted successfully.");
+        setAuthUser(null);
+        setIsLoggedIn(false);
+        navigation("/");
+      }
+    } catch (error) {
+      console.error("Error during account deletion:", error);
+      alert(
+        "An error occurred during account deletion. Please try again later."
+      );
     }
   };
 
@@ -160,6 +186,20 @@ function ViewAccount() {
                     </button>
                     <button type="submit" className="btn btn-primary">
                       Update
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={() => {
+                        const confirmed = window.confirm(
+                          "Are you sure you want to delete this account?"
+                        );
+                        if (confirmed) {
+                          deleteAccountHandler();
+                        }
+                      }}
+                    >
+                      Delete Account
                     </button>
                   </div>
                 </div>

@@ -66,5 +66,16 @@ namespace ProjectOrryxPrime.Controllers
 
             return Ok(viewAccountModel);
         }
+
+        [HttpDelete("deleteAccount")]
+        public IActionResult DeleteAccount([FromBody] int accountId)
+        {
+            AccountBOL accountBOL = new AccountBOL(this._config);
+            int rowsAffected = accountBOL.DeleteAccount(accountId);
+            if (rowsAffected > 0)
+                return Ok(new { Message = "Account deleted successfully." });
+            else
+                return StatusCode(500, new { Message = "Failed to delete account." });
+        }
     }
 }
