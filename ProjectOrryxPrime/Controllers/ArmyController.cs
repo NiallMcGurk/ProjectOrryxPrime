@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using ProjectOrryxPrime.BusinessLogic;
+using ProjectOrryxPrime.FunctionalAreas.Models;
 
 namespace ProjectOrryxPrime.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("armyController")]
     public class ArmyController : ControllerBase
     {
         private readonly IConfiguration _config;
@@ -15,25 +17,23 @@ namespace ProjectOrryxPrime.Controllers
             _config = config;
         }
 
-        [HttpPost]
-        public IActionResult CreateArmy([FromBody] ArmyModel armyModel)
+        [HttpPost("createArmy")]
+        public IActionResult CreateArmy([FromBody] ArmyResponseDataModel armyResponseDataModel)
         {
-            string connectionString = _config.GetConnectionString("DefaultConnection");
+            CreateArmyModel armyModel = new CreateArmyModel(
+                armyResponseDataModel.ArmyName,
+                (FactionEnum)Enum.Parse(typeof(FactionEnum), armyResponseDataModel.Faction),
+                armyResponseDataModel.Points,
+                (DetachmentOrksEnum)Enum.Parse(typeof(DetachmentOrksEnum), armyResponseDataModel.Detachment)
+            );
+                
+            ArmyBOL armyBol = new ArmyBOL(this._config);
+            int rowsAffected = armyBol.CreateArmy(armyModel);
+            if (rowsAffected > 0)
+                return Ok(new { Message = "Army created successfully." });
+            else
+                return StatusCode(500, new { Message = "Failed to create army." });
 
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
-                string query = "INSERT INTO Armies (ArmyUsername, Army, Points) VALUES (@ArmyUsername, @Army, @Points)";
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@ArmyUsername", armyModel.ArmyUsername);
-                    cmd.Parameters.AddWithValue("@Army", armyModel.Type);
-                    cmd.Parameters.AddWithValue("@Points", armyModel.PointSize);
-
-                    int rowsAffected = cmd.ExecuteNonQuery();
-                    return Ok(new { rowsAffected });
-                }
-            }
         }
     }
 }

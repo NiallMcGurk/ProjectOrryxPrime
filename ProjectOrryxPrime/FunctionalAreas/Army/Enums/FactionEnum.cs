@@ -1,4 +1,4 @@
-﻿public enum ArmyType
+﻿public enum FactionEnum
 {
     // Imperium of Man
     SpaceMarines,
@@ -10,7 +10,7 @@
     LegionOfTheDamned,
     AstraMilitarum,
     OfficioAssassinorum,
-    AdeptusMechanicus,       // Questor Mechanicus / Questor Imperialis sub-genres implied
+    AdeptusMechanicus,
     AdeptusCustodes,
     AdeptusMinistorum,
     AdeptaSororitas,
