@@ -3,14 +3,16 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 interface LoginFormDetails {
-  email: string;
-  password: string;
+  Email: string;
+  Password: string;
+  Id: number;
 }
 
 function LoginForm() {
   const [loginDetails, setloginDetails] = useState<LoginFormDetails>({
-    email: "",
-    password: "",
+    Email: "",
+    Password: "",
+    Id: 0,
   });
 
   const navigation = useNavigate();
@@ -40,7 +42,7 @@ function LoginForm() {
 
         if (loginResponseData.ok) {
           setIsLoggedIn(true);
-          setAuthUser({ Username: result.username, Email: result.email });
+          setAuthUser({ Username: result.username, Email: result.email, Id: result.id });
           navigation("/account", { state: { user: result } });
         }
       } catch (error) {
@@ -62,9 +64,9 @@ function LoginForm() {
             className="form-control"
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
-            value={loginDetails.email}
+            value={loginDetails.Email}
             onChange={(e) =>
-              setloginDetails({ ...loginDetails, email: e.target.value })
+              setloginDetails({ ...loginDetails, Email: e.target.value })
             }
           />
           <small id="emailHelp" className="form-text text-muted">
@@ -77,9 +79,9 @@ function LoginForm() {
             type="password"
             className="form-control"
             id="exampleInputPassword1"
-            value={loginDetails.password}
+            value={loginDetails.Password}
             onChange={(e) =>
-              setloginDetails({ ...loginDetails, password: e.target.value })
+              setloginDetails({ ...loginDetails, Password: e.target.value })
             }
           />
         </div>

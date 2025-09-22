@@ -52,7 +52,19 @@ namespace ProjectOrryxPrime.Controllers
             {
                 return BadRequest(new { Error = "Password is invalid or does not meet requirements." });
             }
-            return Ok(new { Message = "Account updated successfully." });
+            ViewAccountModel viewAccountModel = new ViewAccountModel
+            {
+                Id = model.Id,
+                Username = model.Username,
+                Email = model.Email
+            };
+
+            if (viewAccountModel == null)
+            {
+                return Unauthorized(new { Message = "Invalid email or password." });
+            }
+
+            return Ok(viewAccountModel);
         }
     }
 }

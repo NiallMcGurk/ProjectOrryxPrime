@@ -2,11 +2,6 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-interface AccountDetails {
-  Username: string;
-  Email: string;
-}
-
 function ViewAccount() {
   const { authUser, setAuthUser } = useAuth();
 
@@ -15,7 +10,8 @@ function ViewAccount() {
     Username: "",
     NewPassword: "",
     RepeatNewPassword: "",
-    CurrentPassword: "",
+    Password: "",
+    Id: 0,
   });
 
   const navigation = useNavigate();
@@ -27,7 +23,8 @@ function ViewAccount() {
         Username: authUser.Username,
         NewPassword: "",
         RepeatNewPassword: "",
-        CurrentPassword: "",
+        Password: "",
+        Id: authUser.Id,
       });
     }
   }, [authUser]);
@@ -61,9 +58,9 @@ function ViewAccount() {
       if (updateResponseData.ok) {
         alert("Account updated successfully.");
         setAuthUser({
-          Username: result.username,
-          Email: result.email,
-          Id: result.id,
+          Username: result.Username,
+          Email: result.Email,
+          Id: result.Id,
         });
       }
     } catch (error) {
@@ -144,9 +141,9 @@ function ViewAccount() {
                       <input
                         type="password"
                         className="form-control"
-                        name="CurrentPassword"
+                        name="Password"
                         placeholder="Current Password"
-                        value={accountDetails.CurrentPassword}
+                        value={accountDetails.Password}
                         onChange={getNewAccountDetails}
                       />
                     </div>
@@ -161,11 +158,7 @@ function ViewAccount() {
                     >
                       Back Home
                     </button>
-                    <button
-                      type="button"
-                      name="submit"
-                      className="btn btn-primary"
-                    >
+                    <button type="submit" className="btn btn-primary">
                       Update
                     </button>
                   </div>
