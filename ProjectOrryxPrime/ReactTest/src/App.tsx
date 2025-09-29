@@ -4,6 +4,7 @@ import CreateAccount from "./components/CreateAccount";
 import ViewAccount from "./components/ViewAccount";
 import Homepage from "./components/Homepage/Homepage";
 import ArmyBuilder from "./components/ArmyBuilder/ArmyBuilder";
+import ViewArmyModels from "./components/ArmyBuilder/ViewArmyModels";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Route path="*" element={<h1>404 Not Found</h1>} />
       <Route path="/account" element={<ViewAccount />} />
       <Route path="/armyBuilder" element={<ArmyBuilder />} />
+      <Route path="/viewArmyModels" element={<ViewArmyModels />} />
     </Routes>
   );
 }

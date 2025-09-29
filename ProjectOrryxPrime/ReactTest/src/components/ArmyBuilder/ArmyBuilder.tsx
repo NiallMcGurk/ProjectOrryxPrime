@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function ArmyBuilder() {
   const [armyDetails, setArmyDetails] = useState({
@@ -18,6 +19,7 @@ function ArmyBuilder() {
       [name]: value,
     }));
   };
+  const navigation = useNavigate();
 
   const createArmyHandler = async (
     event: React.FormEvent<HTMLFormElement>
@@ -39,6 +41,7 @@ function ArmyBuilder() {
         throw new Error(data.message || "Error");
       }
       alert("Army created successfully!");
+      navigation("/viewArmyModels");
     } catch (error) {
       alert(
         "An error occurred while creating the army. Please try again later."

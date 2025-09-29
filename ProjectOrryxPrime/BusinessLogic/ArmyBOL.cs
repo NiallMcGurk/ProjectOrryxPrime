@@ -19,11 +19,11 @@ namespace ProjectOrryxPrime.BusinessLogic
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "INSERT INTO Armies (ArmyUsername, Army, Points, Detachment) VALUES (@ArmyUsername, @Army, @Points, @Detachment)";
+                string query = "INSERT INTO Armies (Name, FactionType, Points, Detachment) VALUES (@Name, @FactionType, @Points, @Detachment)";
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@ArmyUsername", armyModel.ArmyName);
-                    cmd.Parameters.AddWithValue("@Army", armyModel.Faction);
+                    cmd.Parameters.AddWithValue("@Name", armyModel.ArmyName);
+                    cmd.Parameters.AddWithValue("@FactionType", armyModel.FactionType);
                     cmd.Parameters.AddWithValue("@Points", armyModel.Points);
                     cmd.Parameters.AddWithValue("@Detachment", armyModel.Detachment);
 

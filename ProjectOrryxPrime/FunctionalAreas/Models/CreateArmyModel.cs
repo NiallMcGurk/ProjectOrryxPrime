@@ -6,13 +6,13 @@ namespace ProjectOrryxPrime.FunctionalAreas.Models
     {
         public string ArmyName { get; set; }
         public int Points { get; set; }
-        public FactionEnum Faction { get; set; }
+        public string FactionType { get; set; }
         public DetachmentOrksEnum Detachment { get; set; }
 
         public CreateArmyModel(string armyName, FactionEnum faction, int points, DetachmentOrksEnum detachment)
         {
             ArmyName = armyName;
-            Faction = faction;
+            FactionType = faction.ToString();
             Points = points;
             Detachment = detachment;
         }
