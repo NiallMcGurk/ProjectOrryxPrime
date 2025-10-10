@@ -5,6 +5,7 @@ import ViewAccount from "./components/ViewAccount";
 import Homepage from "./components/Homepage/Homepage";
 import ArmyBuilder from "./components/ArmyBuilder/ArmyBuilder";
 import ViewArmyModels from "./components/ArmyBuilder/ViewArmyModels";
+import MyArmies from "./components/ArmyBuilder/MyArmies";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Route path="/account" element={<ViewAccount />} />
       <Route path="/armyBuilder" element={<ArmyBuilder />} />
       <Route path="/viewArmyModels" element={<ViewArmyModels />} />
+      <Route path="/myArmies" element={<MyArmies />} />
     </Routes>
   );
 }

@@ -41,7 +41,7 @@ function ArmyBuilder() {
         throw new Error(data.message || "Error");
       }
       alert("Army created successfully!");
-      navigation("/viewArmyModels");
+      navigation("/myArmies");
     } catch (error) {
       alert(
         "An error occurred while creating the army. Please try again later."

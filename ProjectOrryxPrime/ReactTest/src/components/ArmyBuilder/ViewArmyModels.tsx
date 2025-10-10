@@ -1,7 +1,10 @@
-import { useState } from "react";
+import React from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getModel } from "../../context/ModelContext";
 
 function ViewArmyModels() {
+  // TO-DO: Fetch all armies from backend using an array and mapping.
   const [modelDetails, setModelDetails] = useState({
     Id: 0,
     Name: "",
@@ -9,16 +12,6 @@ function ViewArmyModels() {
     FactionRuleId: 0,
     StatsId: 0,
   });
-
-  const navigation = useNavigate();
-
-  const getModelDetails = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setModelDetails((prevDetails) => ({
-      ...prevDetails,
-      [name]: value,
-    }));
-  };
 
   const getModelsHandler = async (): Promise<void> => {
     try {
@@ -41,21 +34,34 @@ function ViewArmyModels() {
   };
 
   return (
-    <div className="container py-5">
-      <div className="card">
-        <div className="card-body">
-          <h5 className="card-title">{modelDetails.Name}</h5>
-          <p className="card-text">{modelDetails.FactionType}</p>
-          <a href="#" className="btn btn-primary">
-            Add
-          </a>
+    <form onLoad={getModelsHandler}>
+      <div className="container py-5">
+        <div className="card">
+          <div className="card-body">
+            <label htmlFor="Model">Model</label>
+            <input
+              type="text"
+              className="card-title"
+              name="Name"
+              value={modelDetails.Name}
+              readOnly
+            />
+            <label htmlFor="FactionType">FactionType</label>
+            <input
+              type="text"
+              className="card-title"
+              name="FactionType"
+              value={modelDetails.FactionType}
+              readOnly
+            />
+            <a href="#" className="btn btn-primary">
+              Add
+            </a>
+          </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 }
 
 export default ViewArmyModels;
-function async() {
-  throw new Error("Function not implemented.");
-}

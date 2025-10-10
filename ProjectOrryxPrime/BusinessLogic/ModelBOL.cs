@@ -13,7 +13,7 @@ namespace ProjectOrryxPrime.BusinessLogic
             this._config = config;
         }
 
-        public ViewModelModel GetModel(string factionType)
+        public ViewModelModel GetModel()
         {
             try
             {
@@ -21,10 +21,9 @@ namespace ProjectOrryxPrime.BusinessLogic
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    string query = "SELECT * FROM Models WHERE FactionType = @FactionType";
+                    string query = "SELECT * FROM Models";
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@FactionType", factionType);
 
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {

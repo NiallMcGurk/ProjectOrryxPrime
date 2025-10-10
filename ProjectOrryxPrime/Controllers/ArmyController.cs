@@ -35,5 +35,20 @@ namespace ProjectOrryxPrime.Controllers
                 return StatusCode(500, new { Message = "Failed to create army." });
 
         }
+
+        [HttpGet("getArmies")]
+        public IActionResult GetArmies()
+        {
+            try
+            {
+               ArmyModel model = new ArmyBOL(this._config).GetArmies();
+                return Ok(model);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = ex });
+
+            }
+        }
     }
 }

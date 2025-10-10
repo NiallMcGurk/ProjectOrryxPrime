@@ -17,11 +17,11 @@ namespace ProjectOrryxPrime.Controllers
 
         [HttpGet]
         [Route("getModels")]
-        public IActionResult GetModel(string factionType)
+        public IActionResult GetModel()
         {
             try
             {
-                ViewModelModel model = new ModelBOL(this._config).GetModel(factionType);
+                ViewModelModel model = new ModelBOL(this._config).GetModel();
                 return Ok(model);
             }
             catch (Exception ex)
