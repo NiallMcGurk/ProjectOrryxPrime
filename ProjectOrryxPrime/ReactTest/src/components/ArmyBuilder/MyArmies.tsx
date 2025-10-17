@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 
-interface armies {
+interface Army {
   id: number;
   name: string;
   faction: string;
@@ -9,16 +10,22 @@ interface armies {
 }
 
 function MyArmies() {
-  const [armies, setArmies] = useState<armies>();
+  const [armies, setArmies] = useState<Army[]>([]);
+  const { authUser } = useAuth();
 
   useEffect(() => {
-    getModelsHandler();
-  }, []);
+    if (!authUser?.Id) {
+      return;
+    } else {
+      getModelsHandler(authUser.Id);
+    }
+  }, [authUser]);
 
-  const getModelsHandler = async (): Promise<void> => {
+  const getModelsHandler = async (accountId: number): Promise<void> => {
     try {
       const response = await fetch(
-        "http://localhost:51003/armyController/getArmies",
+        "http://localhost:51003/armyController/getArmies?accountId=" +
+          accountId,
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },
@@ -34,24 +41,30 @@ function MyArmies() {
   };
 
   return (
-    armies && (
-      <div key={armies.id} className="card border-0 shadow-sm mb-3">
-        <div className="card-body d-flex justify-content-between align-items-center">
-          <div>
-            <h5 className="card-title fw-semibold mb-1">{armies.name}</h5>
-            <div className="text-muted mb-1">{armies.faction}</div>
-            <small className="text-secondary">
-              Detachment: {armies.detachment}
-            </small>
+    <>
+      {armies.length > 0 ? (
+        armies.map((army) => (
+          <div key={army.id} className="card border-0 shadow-sm mb-3">
+            <div className="card-body d-flex justify-content-between align-items-center">
+              <div>
+                <h5 className="card-title fw-semibold mb-1">{army.name}</h5>
+                <div className="text-muted mb-1">{army.faction}</div>
+                <small className="text-secondary">
+                  Detachment: {army.detachment}
+                </small>
+              </div>
+              <div className="text-end">
+                <span className="badge bg-primary rounded-pill fs-6 px-3 py-2">
+                  {army.points}
+                </span>
+              </div>
+            </div>
           </div>
-          <div className="text-end">
-            <span className="badge bg-primary rounded-pill fs-6 px-3 py-2">
-              {armies.points}
-            </span>
-          </div>
-        </div>
-      </div>
-    )
+        ))
+      ) : (
+        <p>No armies found.</p>
+      )}
+    </>
   );
 }
 

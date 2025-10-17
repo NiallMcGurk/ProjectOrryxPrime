@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 function ArmyBuilder() {
+  const { authUser } = useAuth();
+
+  const accountId = authUser?.Id ?? 0;
+
   const [armyDetails, setArmyDetails] = useState({
     armyName: "",
     faction: 0,
     points: 0,
     detachment: 0,
+    accountId: accountId,
   });
 
   const getNewArmyDetails = (

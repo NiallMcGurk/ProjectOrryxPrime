@@ -4,12 +4,14 @@ public class ArmyResponseDataModel
     public int Points { get; set; }
     public string Faction { get; set; }
     public string Detachment { get; set; }
+    public int AccountId { get; set; }
 
-    public ArmyResponseDataModel(string armyName, string faction, int points, string detachment)
+    public ArmyResponseDataModel(string armyName, string faction, int points, string detachment, int accountId)
     {
         ArmyName = armyName;
         Faction = faction;
         Points = points;
         Detachment = detachment;
+        AccountId = accountId;
     }
 }

@@ -8,13 +8,15 @@ namespace ProjectOrryxPrime.FunctionalAreas.Models
         public int Points { get; set; }
         public string FactionType { get; set; }
         public DetachmentOrksEnum Detachment { get; set; }
+        public int AccountId { get; set; }
 
-        public CreateArmyModel(string armyName, FactionEnum faction, int points, DetachmentOrksEnum detachment)
+        public CreateArmyModel(string armyName, FactionEnum faction, int points, DetachmentOrksEnum detachment, int accountId)
         {
             ArmyName = armyName;
             FactionType = faction.ToString();
             Points = points;
             Detachment = detachment;
+            AccountId = accountId;
         }
     }
 }

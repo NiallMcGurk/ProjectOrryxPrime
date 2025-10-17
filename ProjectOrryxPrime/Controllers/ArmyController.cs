@@ -24,7 +24,8 @@ namespace ProjectOrryxPrime.Controllers
                 armyResponseDataModel.ArmyName,
                 (FactionEnum)Enum.Parse(typeof(FactionEnum), armyResponseDataModel.Faction),
                 armyResponseDataModel.Points,
-                (DetachmentOrksEnum)Enum.Parse(typeof(DetachmentOrksEnum), armyResponseDataModel.Detachment)
+                (DetachmentOrksEnum)Enum.Parse(typeof(DetachmentOrksEnum), armyResponseDataModel.Detachment),
+                armyResponseDataModel.AccountId
             );
                 
             ArmyBOL armyBol = new ArmyBOL(this._config);
@@ -37,11 +38,11 @@ namespace ProjectOrryxPrime.Controllers
         }
 
         [HttpGet("getArmies")]
-        public IActionResult GetArmies()
+        public IActionResult GetArmies(int accountId)
         {
             try
             {
-               ArmyModel model = new ArmyBOL(this._config).GetArmies();
+               List<ArmyModel> model = new ArmyBOL(this._config).GetArmies(accountId);
                 return Ok(model);
             }
             catch (Exception ex)
