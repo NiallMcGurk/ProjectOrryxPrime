@@ -1,31 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 function ArmyBuilder() {
   const { authUser } = useAuth();
-
-  const accountId = authUser?.Id ?? 0;
+  const navigate = useNavigate();
 
   const [armyDetails, setArmyDetails] = useState({
     armyName: "",
     faction: 0,
     points: 0,
     detachment: 0,
-    accountId: accountId,
+    accountId: 0,
   });
+
+  useEffect(() => {
+    if (authUser?.Id) {
+      setArmyDetails((prev) => ({ ...prev, accountId: authUser.Id }));
+    }
+  }, [authUser]);
 
   const getNewArmyDetails = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  ): void => {
     const { name, value } = event.target;
-
-    setArmyDetails((prevDetails) => ({
-      ...prevDetails,
-      [name]: value,
-    }));
+    setArmyDetails((prev) => ({ ...prev, [name]: value }));
   };
-  const navigation = useNavigate();
 
   const createArmyHandler = async (
     event: React.FormEvent<HTMLFormElement>
@@ -36,18 +36,14 @@ function ArmyBuilder() {
         "http://localhost:51003/armyController/createArmy",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(armyDetails),
         }
       );
       const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.message || "Error");
-      }
+      if (!response.ok) throw new Error(data.message || "Error");
       alert("Army created successfully!");
-      navigation("/myArmies");
+      navigate("/myArmies");
     } catch (error) {
       alert(
         "An error occurred while creating the army. Please try again later."
