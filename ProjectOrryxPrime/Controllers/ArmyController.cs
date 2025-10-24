@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using ProjectOrryxPrime.BusinessLogic;
@@ -37,9 +38,16 @@ namespace ProjectOrryxPrime.Controllers
 
         }
 
+        [Authorize]
         [HttpGet("getArmies")]
         public IActionResult GetArmies(int accountId)
         {
+            var userId = int.Parse(User.FindFirst("UserId")?.Value ?? "0");
+            if (accountId != userId)
+            {
+                return Forbid();
+            }
+
             try
             {
                List<ArmyModel> model = new ArmyBOL(this._config).GetArmies(accountId);

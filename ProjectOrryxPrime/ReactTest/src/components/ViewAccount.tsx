@@ -49,6 +49,7 @@ function ViewAccount() {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
           body: JSON.stringify(accountDetails),
         }
@@ -77,6 +78,7 @@ function ViewAccount() {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
           body: JSON.stringify(accountDetails.Id),
         }

@@ -28,7 +28,7 @@ function LoginForm() {
       navigation("/account");
     } else {
       try {
-        const loginResponseData = await fetch(
+        const response = await fetch(
           "http://localhost:51003/loginController/login",
           {
             method: "POST",
@@ -38,13 +38,23 @@ function LoginForm() {
             body: JSON.stringify(loginDetails),
           }
         );
-        const result = await loginResponseData.json();
+        const data = await response.json();
 
-        if (loginResponseData.ok) {
-          setIsLoggedIn(true);
-          setAuthUser({ Username: result.username, Email: result.email, Id: result.id });
-          navigation("/account", { state: { user: result } });
+        if (!response.ok) {
+          alert("Login failed:");
+          return;
         }
+
+        localStorage.setItem("token", data.token);
+
+        setAuthUser({
+          Username: data.username,
+          Email: data.email,
+          Id: data.id,
+        });
+        setIsLoggedIn(true);
+
+        navigation("/account");
       } catch (error) {
         console.error("Error during login:", error);
         alert("An error occurred during login. Please try again later.");

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
 
 interface Model {
   id: number;
@@ -8,14 +9,19 @@ interface Model {
 function ViewArmyModels() {
   const [models, setModels] = useState<Model[]>([]);
   const [count, setCount] = useState(0);
+  const { id } = useParams();
+  const { state } = useLocation();
 
   const getModelsHandler = async (): Promise<void> => {
     try {
+      const token = localStorage.getItem("token");
       const response = await fetch(
         "http://localhost:51003/modelController/getModels",
         {
           method: "GET",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
       );
       if (!response.ok) throw new Error("Failed to fetch armies");

@@ -17,7 +17,7 @@ function App() {
       <Route path="*" element={<h1>404 Not Found</h1>} />
       <Route path="/account" element={<ViewAccount />} />
       <Route path="/armyBuilder" element={<ArmyBuilder />} />
-      <Route path="/viewArmyModels" element={<ViewArmyModels />} />
+      <Route path="/viewArmyModels/:id" element={<ViewArmyModels />} />
       <Route path="/myArmies" element={<MyArmies />} />
       <Route path="/logout" element={<Logout />} />
     </Routes>

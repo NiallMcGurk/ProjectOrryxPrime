@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using ProjectOrryxPrime.FunctionalAreas.Models;
+using System.Data;
 using System.Reflection;
 
 namespace ProjectOrryxPrime.BusinessLogic
@@ -24,6 +25,7 @@ namespace ProjectOrryxPrime.BusinessLogic
                     string query = "SELECT * FROM Models";
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
+                        // cmd.Parameters.Add("@FactionType", SqlDbType.NVarChar, 256).Value = factionType;
 
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {

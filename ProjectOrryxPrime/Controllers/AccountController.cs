@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using ProjectOrryxPrime.BusinessLogic;
 using ProjectOrryxPrime.FunctionalAreas;
@@ -42,9 +43,17 @@ namespace ProjectOrryxPrime.Controllers
             return null;
         }
 
+        [Authorize]
         [HttpPut("account")]
         public IActionResult UpdateAccount([FromBody] UpdateAccountModel model)
         {
+            var userId = int.Parse(User.FindFirst("UserId")?.Value ?? "0");
+
+            if (model.Id != userId)
+            {
+                return Forbid();
+            }
+
             UpdateAccountBOL updateAccountBOL = new UpdateAccountBOL(this._config);
             int rowsAffected = updateAccountBOL.UpdateAccount(model);
 
@@ -70,6 +79,13 @@ namespace ProjectOrryxPrime.Controllers
         [HttpDelete("deleteAccount")]
         public IActionResult DeleteAccount([FromBody] int accountId)
         {
+            int userId = int.Parse(User.FindFirst("UserId")?.Value ?? "0");
+
+            if (accountId != userId)
+            {
+                return Forbid();
+            }
+
             AccountBOL accountBOL = new AccountBOL(this._config);
             int rowsAffected = accountBOL.DeleteAccount(accountId);
             if (rowsAffected > 0)

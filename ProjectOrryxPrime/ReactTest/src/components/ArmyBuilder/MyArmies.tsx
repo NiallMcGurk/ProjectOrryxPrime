@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 interface Army {
   id: number;
@@ -12,6 +13,7 @@ interface Army {
 function MyArmies() {
   const [armies, setArmies] = useState<Army[]>([]);
   const { authUser } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!authUser?.Id) {
@@ -23,12 +25,17 @@ function MyArmies() {
 
   const getModelsHandler = async (accountId: number): Promise<void> => {
     try {
+      const token = localStorage.getItem("token");
+
       const response = await fetch(
         "http://localhost:51003/armyController/getArmies?accountId=" +
           accountId,
         {
           method: "GET",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -40,11 +47,22 @@ function MyArmies() {
     }
   };
 
+  const handleArmyClick = (army: Army) => {
+    navigate("/viewArmyModels/" + army.id, {
+      state: { faction: army.faction },
+    });
+  };
+
   return (
     <>
       {armies.length > 0 ? (
         armies.map((army) => (
-          <div key={army.id} className="card border-0 shadow-sm mb-3">
+          <div
+            key={army.id}
+            className="card border-0 shadow-sm mb-3"
+            role="button"
+            onClick={() => handleArmyClick(army)}
+          >
             <div className="card-body d-flex justify-content-between align-items-center">
               <div>
                 <h5 className="card-title fw-semibold mb-1">{army.name}</h5>

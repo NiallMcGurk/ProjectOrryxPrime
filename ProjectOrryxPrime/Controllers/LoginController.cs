@@ -1,5 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using ProjectOrryxPrime.FunctionalAreas.Models;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace ProjectOrryxPrime.Controllers
 {
@@ -25,7 +29,34 @@ namespace ProjectOrryxPrime.Controllers
                 return Unauthorized(new { Message = "Invalid email or password." });
             }
 
-            return Ok(viewAccountModel);
+            var jwtSettings = _config.GetSection("Jwt");
+            var key = Encoding.ASCII.GetBytes(jwtSettings["Key"]);
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[]
+                {
+                    new Claim("UserId", viewAccountModel.Id.ToString()),
+                    new Claim(ClaimTypes.Email, viewAccountModel.Email)
+                }),
+                Expires = DateTime.UtcNow.AddHours(1),
+                Issuer = jwtSettings["Issuer"],
+                SigningCredentials = new SigningCredentials(
+                    new SymmetricSecurityKey(key),
+                    SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var jwt = tokenHandler.WriteToken(token);
+
+            return Ok(new
+            {
+                token = jwt,
+                username = viewAccountModel.Username,
+                email = viewAccountModel.Email,
+                id = viewAccountModel.Id
+            });
         }
     }
 }

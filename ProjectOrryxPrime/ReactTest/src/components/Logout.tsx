@@ -12,6 +12,7 @@ function Logout() {
 
     setAuthUser(null);
     setIsLoggedIn(false);
+    localStorage.clear();
 
     navigation("/");
   }, []);

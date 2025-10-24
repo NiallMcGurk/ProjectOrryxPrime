@@ -18,17 +18,25 @@ function Homepage() {
         </p>
 
         <a href="/armyBuilder" className="btn btn-create mt-4">
-          Create Army
+          Create a New Army
+        </a>
+        <a href="/myArmies" className="btn btn-create mt-4">
+          View Armies
         </a>
         <Link
           to={isLoggedIn ? "/account" : "/login"}
           className="btn btn-factions mt-4"
         >
-          {isLoggedIn ? "View Account" : "Login / Create Account"}
+          {isLoggedIn ? "View Account" : "Login"}
         </Link>
         {isLoggedIn && (
           <Link to="/logout" className="btn btn-battles mt-4">
             Log out
+          </Link>
+        )}
+        {!isLoggedIn && (
+          <Link to="/createAccount" className="btn btn-battles mt-4">
+            Create Account
           </Link>
         )}
       </div>
