@@ -36,7 +36,7 @@ function MyArmies() {
       const result = await response.json();
       setArmies(result);
     } catch (error) {
-      alert("An error occurred while fetching armies. Please try again later.");
+      alert("An error occurred while fetching armies.");
     }
   };
 
