@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import "./HomePage.css";
+import { useEffect } from "react";
 
 function Homepage() {
   const { authUser, isLoggedIn } = useAuth();
@@ -25,6 +26,11 @@ function Homepage() {
         >
           {isLoggedIn ? "View Account" : "Login / Create Account"}
         </Link>
+        {isLoggedIn && (
+          <Link to="/logout" className="btn btn-battles mt-4">
+            Log out
+          </Link>
+        )}
       </div>
 
       <footer>
