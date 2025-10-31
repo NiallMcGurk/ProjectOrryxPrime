@@ -21,7 +21,7 @@ It’s also part of my personal goal to move to Berlin and land a software engin
 
 **Frontend**: Typescript with React
 
-**Backend**: ASP.NET Core API, Entity Framework Core, SQL Server 
+**Backend**: C#, ASP.NET Core API, Entity Framework Core, SQL Server 
 
 ---
 
