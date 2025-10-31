@@ -5,25 +5,21 @@ This is a side project I’m building because I play Warhammer and I’m tired o
 - Keep an eye on points  
 - Hit one button and see all the current rules
 
-It’s also part of my personal goal to move to Berlin and land a software engineering role — so I’m taking this app from idea → design → code → deploy, documenting the whole way like a real-world project.
+It’s also part of my personal goal to move to Berlin and land a software engineering role — so I’m taking this app from idea → design → code → deploy, documenting the whole way like a real-world project, using scrum and agile methodologies.
 
 ---
 
 ## Features
 
-- Create & Manage Armies – Name them, pick a faction, set points limits.  
+- Create & Manage Armies – Name them, pick a faction, set points limits.
 - Add & Edit Squads – Choose units, weapons, upgrades, and see points instantly.  
-- One-Button Rules View – All your army’s rules in one scrollable screen.  
-- Auto Points Calculation – No more adding on the back of a napkin.  
-- Guest Quick Build – Build a throwaway list without logging in.  
-- Moderator Tools – Update official points and rules when Games Workshop releases changes.  
-- Admin Tools – Manage users, moderators, and system settings.  
-- Export to PDF – Share with friends or tournament organisers.
+- One-Button Rules View – All your army’s rules in one scrollable screen.
+- User Account - Save your Armies to your own account.
 ---
 
 ## Tech Stack
 
-**Frontend**: React
+**Frontend**: Typescript with React
 
 **Backend**: ASP.NET Core API, Entity Framework Core, SQL Server 
 
@@ -32,9 +28,9 @@ It’s also part of my personal goal to move to Berlin and land a software engin
 ## Documentation
 
 Everything is in /docs:  
-- Use Cases for Regular User, Guest, Moderator, Admin  
+- Use Cases for Regular User
 - Use Case Diagram (UML)  
-- Sequence Diagrams for major flows  
+- Sequence Diagrams 
 - ERD for the database  
 - System Architecture Diagram
 ---
